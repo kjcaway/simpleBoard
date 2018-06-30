@@ -4,6 +4,7 @@ var mongoose = require('mongoose');
 
 const router = express.Router();
 
+// 게시물 입력
 router.post('/', (req, res) => {
   if (req.body.username === "") {
     return res.status(400).json({
@@ -27,6 +28,16 @@ router.post('/', (req, res) => {
   board.save(err => {
     if (err) throw err;
     return res.json({ success: true });
+  });
+});
+
+// 게시물 조회
+router.get('/', (req, res) => {
+  Board.find()
+  .sort({"_id": -1})
+  .exec((err, boards) => {
+      if(err) throw err;
+      res.json(boards);
   });
 });
 
